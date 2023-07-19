@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",                              /* output file. */
+    "paths": {
+      "@package/*": ["packages/*"],
+      "@app/*": ["app/*"]
+    },
+    "baseUrl": "."
+  },
+  "extends": ["./tsconfig.base.json"],
+  "include": ["./packages"],
+  "exclude": ["./node_modules", "./test"]
+}

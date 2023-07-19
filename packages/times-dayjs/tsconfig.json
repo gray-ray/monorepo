@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    // 生成声明文件
+    "declaration": true,
+  },
+  "include": ["./lib"],
+  "exclude": ["./node_modules", "./test", "./dist"]
+}
