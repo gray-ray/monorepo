@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "target": "ESNEXT",
+    // "lib": ["ES2015",],
+    // 生成声明文件
+    "declaration": true,
+    "strict": true,
+    "types": ["./typing.d.ts"]
+  },
+  "include": ["./hooks","./typing.d.ts"],
+  "exclude": ["./node_modules", "./test", "./dist"]
+}

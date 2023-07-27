@@ -1,0 +1,21 @@
+{
+  "name": "@packages/react-hooks-set",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./hooks/index.ts",
+  "types": "./typing.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf ./dist && tsc -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-check": "^0.2.4",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+}

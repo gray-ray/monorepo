@@ -57,6 +57,8 @@ const Index = (props: Props, ref: any) => {
     const { current } = canvasRef;
     const { current: divCur } = parentRef;
     canvasHistory = [];
+    /**   @typescript-eslint/ban-ts-comment 禁用下一行检测  */
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const ctx: CanvasRenderingContext2D = current?.getContext("2d");
     // 如果在js中设置canvas的宽高会出现拉伸问题
