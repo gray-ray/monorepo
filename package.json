@@ -1,0 +1,28 @@
+{
+  "name": "ray-monorepo",
+  "version": "1.0.3",
+  "private": true,
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx,.js",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js --fix",
+    "format": "prettier --write .",
+    "build": "pnpm -r --stream build",
+    "version": "pnpm -r exec npm version"
+  },
+  "keywords": [],
+  "workspaces": [
+    "packages/*"
+  ],
+  "author": "gray-ray",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3"
+  }
+}
