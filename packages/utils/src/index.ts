@@ -1,6 +1,12 @@
 /**
- * @description 数组、对象相关操作
+ * @description 工具函数集合
  */
+
+import { OBJECT_TYPE } from './enum';
+
+import TreeHelper, { findNodeByPredicate, updateNode, deleteNode, buildIndexMap } from './tree';
+
+export { TreeHelper, findNodeByPredicate, updateNode, deleteNode, buildIndexMap };
 
 /**
  * @description 字符串 填充
@@ -18,15 +24,15 @@ export function getPadStr(
   type: 'prefix' | 'suffix' = 'prefix'
 ): string {
   if (typeof len !== 'number') {
-    throw new Error('len must be a number')
+    throw new Error('len must be a number');
   }
   if (!padStr) {
-    throw new Error('padStr cannot be empty')
+    throw new Error('padStr cannot be empty');
   }
   if (type == 'prefix') {
-    return str.padStart(len, padStr)
+    return str.padStart(len, padStr);
   }
-  return str.padEnd(len, padStr)
+  return str.padEnd(len, padStr);
 }
 
 /**
@@ -34,50 +40,9 @@ export function getPadStr(
  * @param {any} a
  * @returns {string}
  */
-export function getValueType(a: any): string {
+export function getValueType(a: any): OBJECT_TYPE {
   //@ts-ignore
-  return Object.prototype.toString.call(a).match(/\[object (\w+)\]/)[1]
-}
-
-/**
- * @description 树遍历多条件查询
- * @param { object | Array } data
- * @param {string} childKey
- * @param { Function } predicate
- * @returns {any}
- */
-export function findNode(
-  data: object | Array<any>,
-  predicate: (e: any) => boolean,
-  childKey: string = 'children'
-): any {
-  if (!['Object', 'Array']?.includes(getValueType(data))) {
-    throw new Error('data 必须为对象或者数组')
-  }
-  if (!childKey) {
-    throw new Error('childKey cannot be empty')
-  }
-
-  const valueType = getValueType(data)
-
-  const translateData = {
-    Object: [data],
-    Array: data
-  }
-
-  // @ts-ignore
-  const stack = translateData[valueType]
-
-  while (stack?.length) {
-    const node = stack?.pop()
-
-    if (predicate(node)) {
-      return node
-    } else if (node?.[childKey]?.length) {
-      stack?.push(...node?.[childKey])
-    }
-  }
-  return undefined
+  return Object.prototype.toString.call(a).match(/\[object (\w+)\]/)[1];
 }
 
 /**
@@ -87,30 +52,30 @@ export function findNode(
  */
 export function validateUrlQuery(url: string): boolean {
   try {
-    let decodedUrl
+    let decodedUrl;
     try {
-      decodedUrl = decodeURIComponent(url)
+      decodedUrl = decodeURIComponent(url);
     } catch (e) {
-      return false // 解码失败说明格式有问题
+      return false; // 解码失败说明格式有问题
     }
 
     // 提取 query 部分的正则
-    const queryMatch = decodedUrl.match(/\?(.*)$/)
-    if (!queryMatch) return true // 没有 query 部分视为有效
+    const queryMatch = decodedUrl.match(/\?(.*)$/);
+    if (!queryMatch) return true; // 没有 query 部分视为有效
 
-    const query = queryMatch[1]
-    if (!query) return true // 空 query 部分（只有?）视为有效
+    const query = queryMatch[1];
+    if (!query) return true; // 空 query 部分（只有?）视为有效
     // 主校验正则：
     // 1. 允许键值对 key=value 或只有 key
     // 2. 键不能为空，值可以为空
     // 3. 允许被编码的字符
     // 4. 多个参数用 & 分隔
     // 5. 不允许以 & 开头或结尾，也不允许连续的 &&
-    const queryRegex = /^(?:[^&=]+(?:=[^&=]*)?)(?:&[^&=]+(?:=[^&=]*)?)*$/
+    const queryRegex = /^(?:[^&=]+(?:=[^&=]*)?)(?:&[^&=]+(?:=[^&=]*)?)*$/;
 
-    return queryRegex.test(query)
+    return queryRegex.test(query);
   } catch (error) {
-    return false
+    return false;
   }
 }
 
@@ -125,71 +90,55 @@ export function memoize<T extends (...args: any[]) => any>(
   fn: (v: any) => any,
   { ttl = 0, maxSize = 100, resolver }: MemoizeOptions<T>
 ) {
-  const cache = new Map<string, { value: ReturnType<T>; expireAt: number }>()
+  const cache = new Map<string, { value: ReturnType<T>; expireAt: number }>();
 
   return function (...args: Parameters<T>): ReturnType<T> {
-    const key = resolver ? resolver(...args) : JSON.stringify(args)
+    const key = resolver ? resolver(...args) : JSON.stringify(args);
 
-    const now = Date.now()
+    const now = Date.now();
 
     if (cache.has(key)) {
-      const entry = cache.get(key)!
+      const entry = cache.get(key)!;
 
       if (ttl == 0 || now - entry.expireAt < ttl) {
         // LRU: 重新移动到末尾（最近最少使用）
-        cache.delete(key)
+        cache.delete(key);
 
-        cache.set(key, entry)
+        cache.set(key, entry);
 
-        return entry?.value
+        return entry?.value;
       } else {
         // expired
-        cache.delete(key)
+        cache.delete(key);
       }
     }
 
     // LRU 淘汰
     // @ts-ignore
-    const result = fn.apply(this, args)
+    const result = fn.apply(this, args);
 
-    const expireAt = ttl > 0 ? now + ttl : Infinity
+    const expireAt = ttl > 0 ? now + ttl : Infinity;
 
     if (cache.size >= maxSize) {
-      const firstKey = cache.keys().next().value!
+      const firstKey = cache.keys().next().value!;
 
-      cache.delete(firstKey)
+      cache.delete(firstKey);
     }
 
-    cache.set(key, { value: result, expireAt })
+    cache.set(key, { value: result, expireAt });
 
-    return result
-  } as T
-}
-
-/**
- * @description 树数组遍历 添加新属性
- * @param {  Array } data
- * @param {object} extra
- * @returns {any}
- */
-function traverseTree(data: Array<any>, extra: object = {}, childKey: string = 'children'): any {
-  return data.map((node) => {
-    const newNode = {
-      ...node,
-      ...extra
-    }
-    if (node?.[childKey]?.length) {
-      newNode[childKey] = traverseTree(node[childKey], extra, childKey)
-    }
-    return newNode
-  })
+    return result;
+  } as T;
 }
 
 export default {
   getPadStr,
   getValueType,
-  findNode,
   validateUrlQuery,
   memoize,
-  traverseTree
-}
+  TreeHelper,
+  findNodeByPredicate,
+  updateNode,
+  deleteNode,
+  buildIndexMap
+};

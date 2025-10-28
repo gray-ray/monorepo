@@ -13,6 +13,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "author": "gray-ray",
   "license": "MIT",
   "description": "",
