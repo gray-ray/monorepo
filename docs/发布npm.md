@@ -69,4 +69,14 @@ npx changeset version
 git add .
 git commit -m "chore(release): version packages"
 git push
+
+# 1. 构建所有包
+pnpm run build
+
+# 2. 发布到 NPM
+pnpm changeset publish
 ```
+
+### 手动将类型文件，复制到构建产物中
+
+`rm -rf dist && tsc -p tsconfig.json &&  cp typings.d.ts dist/`

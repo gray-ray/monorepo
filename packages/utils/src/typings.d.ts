@@ -6,7 +6,7 @@ declare type MemoizeOptions<T extends (...args: any[]) => any> = {
   resolver?: (...args: Parameters<T>) => string;
 };
 
-declare namespace TreeHelper {
+declare namespace Tree {
   type TreeNode = Record<string, any>;
 
   interface TreeOption {

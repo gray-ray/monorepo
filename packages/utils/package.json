@@ -12,6 +12,6 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.json"
+    "build": "rm -rf dist && tsc -p tsconfig.json &&  cp src/typings.d.ts dist/"
   }
 }

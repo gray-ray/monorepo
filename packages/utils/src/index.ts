@@ -1,7 +1,6 @@
 /**
  * @description 工具函数集合
  */
-
 import { OBJECT_TYPE } from './enum';
 
 import TreeHelper, { findNodeByPredicate, updateNode, deleteNode, buildIndexMap } from './tree';

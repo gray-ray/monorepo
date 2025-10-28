@@ -3,7 +3,6 @@
  */
 import { getValueType } from './index';
 import { OBJECT_TYPE } from './enum';
-
 /**
  * @description 树遍历多条件查找
  * @param {  Array } data
@@ -127,13 +126,13 @@ export function buildIndexMap<T extends Record<string, any>>(
   return indexMap;
 }
 
-export default class TreeHelper<T extends TreeHelper.TreeNode> {
+export default class TreeHelper<T extends Tree.TreeNode> {
   private tree: T[];
   private indexKey: string;
   private childKey: string;
   private indexMap: Map<any, T> = new Map();
 
-  constructor(tree: T[], options?: TreeHelper.TreeOption) {
+  constructor(tree: T[], options?: Tree.TreeOption) {
     this.tree = tree;
     this.childKey = options?.childKey || 'children';
     this.indexKey = options?.indexKey || 'id';
