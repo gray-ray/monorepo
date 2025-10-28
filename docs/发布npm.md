@@ -51,3 +51,22 @@ pnpm version minor
 # 1.0.0 -> 2.0.0 ✅ 破坏旧功能、不兼容升级
 pnpm version major
 ```
+
+### 使用 Changesets 管理多包版本与 changelog（适合 monorepo）
+
+```bash
+# 根目录安装并初始化
+pnpm add -D @changesets/cli
+npx changeset init
+
+# 生成一个变更集（交互式选择包和版本类型）
+npx changeset
+
+# 生成版本并更新 package.json / changelogs
+npx changeset version
+
+# 提交变更
+git add .
+git commit -m "chore(release): version packages"
+git push
+```
