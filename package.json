@@ -7,7 +7,9 @@
     "lint:fix": "eslint . --ext .ts,.tsx,.js --fix",
     "format": "prettier --write .",
     "build": "pnpm -r --stream build",
-    "version": "pnpm -r exec npm version"
+    "version:changeset": "pnpm changeset",
+    "version:packages": "pnpm changeset version",
+    "publish": "pnpm changeset publish"
   },
   "keywords": [],
   "workspaces": [
@@ -21,6 +23,7 @@
   "description": "",
   "devDependencies": {
     "@changesets/cli": "^2.29.7",
+    "@types/moment": "^2.13.0",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
     "eslint": "^9.38.0",
@@ -28,5 +31,8 @@
     "eslint-plugin-prettier": "^5.5.4",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "moment": "^2.30.1"
   }
 }

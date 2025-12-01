@@ -32,6 +32,7 @@ pnpm -r --stream build
 # 登录
 npm login
 
+
 #  递归发布包
 pnpm -r publish
 

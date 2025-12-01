@@ -3,36 +3,43 @@
  */
 import { OBJECT_TYPE } from './enum';
 
-import TreeHelper, { findNodeByPredicate, updateNode, deleteNode, buildIndexMap } from './tree';
+import TreeHelper, {
+  findNodeByPredicate,
+  updateNode,
+  deleteNode,
+  buildChildParentIndexMap
+} from './tree';
 
-export { TreeHelper, findNodeByPredicate, updateNode, deleteNode, buildIndexMap };
+import { getDateRangeArray, getStartEndByDuration, getDiffFromNow } from './date';
 
-/**
- * @description 字符串 填充
- * @param {string} str
- * @param {number} len
- * @param {string} [padStr = "*"]
- * @param { 'prefix' | 'suffix' } [type = "prefix"]
- * @returns {string}
- */
+import { getPadStr, randomChineseStr, randomColorArray } from './str';
 
-export function getPadStr(
-  str: string,
-  len: number,
-  padStr: string = '*',
-  type: 'prefix' | 'suffix' = 'prefix'
-): string {
-  if (typeof len !== 'number') {
-    throw new Error('len must be a number');
-  }
-  if (!padStr) {
-    throw new Error('padStr cannot be empty');
-  }
-  if (type == 'prefix') {
-    return str.padStart(len, padStr);
-  }
-  return str.padEnd(len, padStr);
-}
+import { defaultColorArray, rgbToHsl, hslToRgb, getMainColors, generateSubColors } from './color';
+
+export {
+  TreeHelper,
+  findNodeByPredicate,
+  updateNode,
+  deleteNode,
+  buildChildParentIndexMap,
+  getDateRangeArray,
+  getStartEndByDuration,
+  getDiffFromNow,
+  randomChineseStr,
+  randomColorArray,
+  getPadStr,
+  defaultColorArray,
+  rgbToHsl,
+  hslToRgb,
+  getMainColors,
+  generateSubColors
+};
+
+type MemoizeOptions<T extends (...args: any[]) => any> = {
+  ttl?: number;
+  maxSize?: number;
+  resolver?: (...args: Parameters<T>) => string;
+};
 
 /**
  * @description 获取当前数据类型
@@ -131,7 +138,6 @@ export function memoize<T extends (...args: any[]) => any>(
 }
 
 export default {
-  getPadStr,
   getValueType,
   validateUrlQuery,
   memoize,
@@ -139,5 +145,16 @@ export default {
   findNodeByPredicate,
   updateNode,
   deleteNode,
-  buildIndexMap
+  buildChildParentIndexMap,
+  getDateRangeArray,
+  getStartEndByDuration,
+  getDiffFromNow,
+  randomChineseStr,
+  randomColorArray,
+  getPadStr,
+  defaultColorArray,
+  rgbToHsl,
+  hslToRgb,
+  getMainColors,
+  generateSubColors
 };
